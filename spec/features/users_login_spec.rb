@@ -19,7 +19,7 @@ feature 'User can sign-in', '
   end
 
   scenario 'unregistered user tries to login' do
-    fill_in 'Email', with: '***REMOVED***'
+    fill_in 'Email', with: 'unregistered@user.com'
     fill_in 'Password', with: 'wrong_pass'
 
     click_on 'Log in'
