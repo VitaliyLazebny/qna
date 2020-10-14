@@ -10,6 +10,13 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api, defaults: { format: :json } do
+    resources :answers, only: [] do
+      resources :vote, only: [:create, :index]
+      delete :vote
+    end
+  end
+
   resources :attachments, only: :destroy
   resources :awards, only: :index
 end
