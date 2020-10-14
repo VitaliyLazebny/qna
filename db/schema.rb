@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_190_812_214_625) do
+ActiveRecord::Schema.define(version: 20_201_014_185_232) do
   create_table 'active_storage_attachments', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -85,6 +85,16 @@ ActiveRecord::Schema.define(version: 20_190_812_214_625) do
     t.datetime 'updated_at', null: false
     t.index ['email'], name: 'index_users_on_email', unique: true
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
+  end
+
+  create_table 'votes', force: :cascade do |t|
+    t.integer 'user_id', null: false
+    t.integer 'answer_id', null: false
+    t.integer 'value', limit: 1
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['answer_id'], name: 'index_votes_on_answer_id'
+    t.index ['user_id'], name: 'index_votes_on_user_id'
   end
 
   add_foreign_key 'active_storage_attachments', 'active_storage_blobs', column: 'blob_id'

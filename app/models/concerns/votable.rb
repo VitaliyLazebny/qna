@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Votable
   include ActiveSupport::Concern
 
-  has_many :votes
+  # has_many :votes
 
   def like(user)
     Vote.create(user: user, answer: self, value: 1)
