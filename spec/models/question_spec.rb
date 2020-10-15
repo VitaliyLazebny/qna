@@ -19,7 +19,7 @@ RSpec.describe Question, type: :model do
       answer.update!(best: true)
       expect { question.destroy! }
         .to change(Question, :count).by(-1)
-                                    .and change(Answer, :count).by(-1)
+        .and change(Answer, :count).by(-1)
     end
   end
 
