@@ -2,7 +2,7 @@
     .answer id="answer-#{answer.id}"
       .body
         = answer.body
-      - unless current_user.author_of?(answer)
+      - if current_user && !current_user.author_of?(answer)
         .vote
           .rating
             = answer.rating

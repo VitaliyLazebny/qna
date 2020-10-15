@@ -14,7 +14,7 @@ module Api
         answer: @answer,
         value: vote_params[:value]
       )
-
+      
       render json: { rating: @answer.rating,
                      answer_id: @answer.id }
     end

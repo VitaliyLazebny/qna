@@ -22,8 +22,7 @@ RSpec.describe Api::VotesController, type: :controller do
 
       it 'renders proper json' do
         post :create, params: { answer_id: answer.id, vote: { value: 1 } }, format: :js
-        expect(JSON.parse(response.body)['id']).to eq(1)
-        expect(JSON.parse(response.body)['user_id']).to eq(user.id)
+        expect(JSON.parse(response.body)['rating']).to eq(1)
         expect(JSON.parse(response.body)['answer_id']).to eq(answer.id)
       end
 
