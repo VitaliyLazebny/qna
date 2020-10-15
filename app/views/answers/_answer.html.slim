@@ -2,12 +2,13 @@
     .answer id="answer-#{answer.id}"
       .body
         = answer.body
-      .vote
-        .rating
-          = answer.rating
-        = link_to '+1', api_answer_votes_path(answer.id, vote: { value: 1 }), data: { answer_id: answer.id }, class: "vote-1-link #{answer.was_voted_by?(current_user) ? 'hidden' : ''}", method: :post, remote: true
-        = link_to '-1', api_answer_votes_path(answer.id, vote: { value: -1 }), data: { answer_id: answer.id }, class: "vote--1-link #{answer.was_voted_by?(current_user) ? 'hidden' : ''}", method: :post, remote: true
-        = link_to 'unvote', api_answer_vote_path(answer.id), data: { answer_id: answer.id }, class: "unvote-link #{answer.was_voted_by?(current_user) ? '' : 'hidden'}", method: :delete, remote: true
+      - unless current_user.author_of?(answer)
+        .vote
+          .rating
+            = answer.rating
+          = link_to '+1', api_answer_votes_path(answer.id, vote: { value: 1 }), data: { answer_id: answer.id }, class: "vote-1-link #{answer.was_voted_by?(current_user) ? 'hidden' : ''}", method: :post, remote: true
+          = link_to '-1', api_answer_votes_path(answer.id, vote: { value: -1 }), data: { answer_id: answer.id }, class: "vote--1-link #{answer.was_voted_by?(current_user) ? 'hidden' : ''}", method: :post, remote: true
+          = link_to 'unvote', api_answer_vote_path(answer.id), data: { answer_id: answer.id }, class: "unvote-link #{answer.was_voted_by?(current_user) ? '' : 'hidden'}", method: :delete, remote: true
       .links
         =render answer.links
       .attachments

@@ -52,6 +52,7 @@ RSpec.configure do |config|
 
   config.before(:all, type: :feature) do
     Capybara.server = :puma, { Silent: true }
+    Capybara.ignore_hidden_elements = true
   end
 
   # js_driver = ENV['GUI'] == '1' ? :selenium_chrome : :selenium_chrome_headless
