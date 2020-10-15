@@ -17,7 +17,7 @@ module Votable
     Vote.where(user: user, answer: self).destroy_all
   end
 
-  def ranking
-    Vote.where(answer: self).sum
+  def rating
+    Vote.where(answer: self).sum(:value)
   end
 end
