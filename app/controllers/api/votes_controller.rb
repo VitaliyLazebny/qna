@@ -1,38 +1,42 @@
 # frozen_string_literal: true
 
-class Api::VotesController < ApplicationController
-  skip_before_action :verify_authenticity_token
-  respond_to :json
+module Api
+  class VotesController < ApplicationController
+    skip_before_action :verify_authenticity_token
+    respond_to :json
 
-  before_action :authenticate_user!
-  before_action :load_answer
+    before_action :authenticate_user!
+    before_action :load_answer
 
-  def create
-    vote = Vote.create(
-      user: current_user,
-      answer: @answer,
-      value: vote_params[:value]
-    )
+    def create
+      vote = Vote.create(
+        user: current_user,
+        answer: @answer,
+        value: vote_params[:value]
+      )
 
-    render json: vote
-  end
+      render json: { rating: @answer.rating,
+                     answer_id: @answer.id }
+    end
 
-  def destroy
-    Vote.where(
-      user: current_user,
-      answer: @answer
-    ).destroy_all
+    def destroy
+      Vote.where(
+        user: current_user,
+        answer: @answer
+      ).destroy_all
 
-    render json: { operation: :success }
-  end
+      render json: { rating: @answer.rating,
+                     answer_id: @answer.id }
+    end
 
-  private
+    private
 
-  def load_answer
-    @answer = Answer.find(params[:answer_id])
-  end
+    def load_answer
+      @answer = Answer.find(params[:answer_id])
+    end
 
-  def vote_params
-    params.require(:vote).permit(:value)
+    def vote_params
+      params.require(:vote).permit(:value)
+    end
   end
 end
