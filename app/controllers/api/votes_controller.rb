@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class API::VotesController < ApplicationController
+class Api::VotesController < ApplicationController
   skip_before_action :verify_authenticity_token
   respond_to :json
 
