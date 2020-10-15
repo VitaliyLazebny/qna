@@ -8,6 +8,28 @@ let hideVoteLinks = function(e){
     $(`#answer-${answerId} .vote .unvote-link`).show();
 }
 
+let showVoteLinks = function(e){
+    e.preventDefault();
+
+    let answerId = $(this).data('answerId');
+
+    $(`#answer-${answerId} .vote .vote-1-link`).show();
+    $(`#answer-${answerId} .vote .vote--1-link`).show();
+    $(`#answer-${answerId} .vote .unvote-link`).hide();
+}
+
+let processResult = function(e) {
+    let request_answer = e.detail[0];
+    let answer_id = '#answer-' + request_answer['answer_id']
+    let counter   = $(answer_id + ' .vote .rating')
+    counter.text(request_answer['rating']);
+}
+
+let processErrors = function(e) {
+    let errors = e.detail[0];
+    console.log(errors);
+}
+
 function setEventOnPlusOneLink(){
     $('.answer').on(
         'click',
@@ -21,29 +43,23 @@ function setEventOnPlusOneLink(){
         hideVoteLinks
     );
 
+    $('.answer').on(
+        'click',
+        '.unvote-link',
+        showVoteLinks
+    );
+
     $('.vote-1-link')
-        .on('ajax:success', function(e) {
-            let request_answer = e.detail[0];
-            let answer_id = '#answer-' + request_answer['answer_id']
-            let counter   = $(answer_id + ' .vote .rating')
-            counter.text(Number(counter.text()) + 1);
-        })
-        .on('ajax:error', function(e) {
-            let errors = e.detail[0];
-            console.log(errors);
-        });
+        .on('ajax:success', processResult )
+        .on('ajax:error', processErrors);
 
     $('.vote--1-link')
-        .on('ajax:success', function(e) {
-            let request_answer = e.detail[0];
-            let answer_id = '#answer-' + request_answer['answer_id']
-            let counter   = $(answer_id + ' .vote .rating')
-            counter.text(Number(counter.text()) - 1);
-        })
-        .on('ajax:error', function(e) {
-            let errors = e.detail[0];
-            console.log(errors);
-        });
+        .on('ajax:success', processResult)
+        .on('ajax:error', processErrors);
+
+    $('.unvote-link')
+        .on('ajax:success', processResult)
+        .on('ajax:error', processErrors);
 }
 
 $(document).on("turbolinks:load",

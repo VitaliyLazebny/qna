@@ -20,4 +20,8 @@ module Votable
   def rating
     Vote.where(answer: self).sum(:value)
   end
+
+  def was_voted_by?(user)
+    Vote.exists?(user_id: user.id, answer: self.id )
+  end
 end

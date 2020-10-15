@@ -9,7 +9,7 @@ module Api
     before_action :load_answer
 
     def create
-      vote = Vote.create(
+      Vote.create(
         user: current_user,
         answer: @answer,
         value: vote_params[:value]
