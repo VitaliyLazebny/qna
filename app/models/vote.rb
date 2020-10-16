@@ -4,7 +4,7 @@ class Vote < ApplicationRecord
   validate :validate_absence
 
   belongs_to :user
-  belongs_to :answer
+  belongs_to :votable, polymorphic: true
 
   validates :value, inclusion: { in: [-1, 1] }
 
