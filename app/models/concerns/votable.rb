@@ -3,7 +3,9 @@
 module Votable
   include ActiveSupport::Concern
 
-  # has_many :votes
+  included(nil) do
+    has_many :votes, as: :votable
+  end
 
   def like(user)
     Vote.create(user: user, answer: self, value: 1)
