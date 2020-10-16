@@ -11,6 +11,6 @@ class Vote < ApplicationRecord
   private
 
   def validate_absence
-    errors.add(:base, 'Already exists.') if Vote.exists?(user_id: user_id, answer: answer_id)
+    errors.add(:base, 'Already exists.') if Vote.exists?(user_id: user_id, votable: votable)
   end
 end

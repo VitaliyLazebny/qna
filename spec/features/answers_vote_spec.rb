@@ -32,7 +32,7 @@ feature 'User can choose the best answer', '
       within "#answer-#{answer.id} .rating" do
         expect(body).to have_content '1'
         expect(body).to_not have_link '+1'
-        expect(body).to_not  have_link '-1'
+        expect(body).to_not have_link '-1'
         expect(body).to have_link 'unvote'
       end
 
@@ -53,7 +53,7 @@ feature 'User can choose the best answer', '
       login answerer
       visit question_path(question)
 
-      expect(body).not_to have_selector(".rating")
+      expect(body).not_to have_selector('.rating')
       expect(body).to_not have_link '+1'
       expect(body).to_not have_link '-1'
       expect(body).to_not have_link 'unvote'

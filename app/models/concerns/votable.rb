@@ -8,22 +8,22 @@ module Votable
   end
 
   def like(user)
-    Vote.create(user: user, answer: self, value: 1)
+    Vote.create(user: user, votable: self, value: 1)
   end
 
   def dislike(user)
-    Vote.create(user: user, answer: self, value: -1)
+    Vote.create(user: user, votable: self, value: -1)
   end
 
   def recall(user)
-    Vote.where(user: user, answer: self).destroy_all
+    Vote.where(user: user, votable: self).destroy_all
   end
 
   def rating
-    Vote.where(answer: self).sum(:value)
+    Vote.where(votable: self).sum(:value)
   end
 
   def was_voted_by?(user)
-    Vote.exists?(user_id: user.id, answer: self.id )
+    Vote.exists?(user_id: user.id, votable: self)
   end
 end

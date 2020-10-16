@@ -4,7 +4,7 @@ class Votes < ActiveRecord::Migration[6.0]
   def change
     create_table :votes do |t|
       t.integer :user_id, null: false, index: true
-      t.integer :votable_type, null: false
+      t.text    :votable_type, null: false
       t.integer :votable_id, null: false
       t.integer :value, limit: 1
 
