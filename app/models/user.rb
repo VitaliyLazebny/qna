@@ -12,8 +12,6 @@ class User < ApplicationRecord
   has_many :votes
 
   def author_of?(resource)
-    id.present? &&
-      resource.respond_to?(:user_id) &&
-      id == resource&.user_id
+    id.present? && id == resource.try(:user_id)
   end
 end

@@ -11,40 +11,40 @@ RSpec.describe Api::VotesController, type: :controller do
       before { login(user) }
 
       it 'saves -1 vote' do
-        expect { post :create, params: { answer_id: answer.id, vote: { value: -1 } }, format: :json }
+        expect { post :create, params: { vote: { votable_id: answer.id, votable_type: 'Answer', value: -1 } }, format: :json }
           .to change(Vote, :count).by(1)
       end
 
       it 'saves 1 vote' do
-        expect { post :create, params: { answer_id: answer.id, vote: { value: 1 } }, format: :json }
+        expect { post :create, params: { vote: { votable_id: answer.id, votable_type: 'Answer', value: 1 } }, format: :json }
           .to change(Vote, :count).by(1)
       end
 
       it 'renders proper json' do
-        post :create, params: { answer_id: answer.id, vote: { value: 1 } }, format: :js
+        post :create, params: { vote: { votable_id: answer.id, votable_type: 'Answer', value: 1 } }, format: :js
         expect(JSON.parse(response.body)['rating']).to eq(1)
-        expect(JSON.parse(response.body)['answer_id']).to eq(answer.id)
+        expect(JSON.parse(response.body)['votable']['id']).to eq(answer.id)
       end
 
       it 'not saves invalid vote' do
-        expect { post :create, params: { answer_id: answer.id, vote: { value: 0 } }, format: :json }
+        expect { post :create, params: { vote: { votable_id: answer.id, votable_type: 'Answer', value: 0 } }, format: :json }
           .to_not change(Vote, :count)
       end
 
       it 'renders proper for invalid vote' do
-        post :create, params: { answer_id: answer.id, vote: { value: 0 } }, format: :js
+        post :create, params: { vote: { votable_id: answer.id, votable_type: 'Answer', value: 0 } }, format: :js
         expect(JSON.parse(response.body)['id']).to eq(nil)
       end
     end
 
     context 'visitor' do
       it 'not saves' do
-        expect { post :create, params: { answer_id: answer.id, vote: { value: -1 } }, format: :json }
+        expect { post :create, params: { vote: { votable_id: answer.id, votable_type: 'Answer', value: -1 } }, format: :json }
           .to_not change(Vote, :count)
       end
 
-      it 'renders proper answer' do
-        post :create, params: { answer_id: answer.id, vote: { value: 0 } }, format: :js
+      it 'renders proper response' do
+        post :create, params: { vote: { votable_id: answer.id, votable_type: 'Answer', value: 0 } }, format: :js
         expect(response.body).to eq('You need to sign in or sign up before continuing.')
       end
     end

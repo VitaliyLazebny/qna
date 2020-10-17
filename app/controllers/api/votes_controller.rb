@@ -11,28 +11,30 @@ module Api
     def create
       Vote.create(
         user: current_user,
-        votable: votable,
+        votable: @votable,
         value: vote_params[:value]
       )
 
-      render json: { rating: @answer.rating,
-                     votable: votable }
+      render json: { rating: @votable.rating,
+                     votable: @votable }
     end
 
     def destroy
       Vote.where(
         user: current_user,
-        votable: votable
+        votable: @votable
       ).destroy_all
 
-      render json: { rating: @answer.rating,
-                     votable: votable }
+      render json: { rating: @votable.rating,
+                     votable: @votable }
     end
 
     private
 
     def load_votable
-      vote_params[:votable_type].constantize.find(vote_params[:votable_id])
+      @votable = vote_params[:votable_type]
+                   &.constantize
+                   &.find(vote_params[:votable_id])
     end
 
     def vote_params
