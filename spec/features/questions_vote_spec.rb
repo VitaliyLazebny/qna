@@ -4,15 +4,13 @@
 
 require 'rails_helper'
 
-feature 'User can choose the best answer', '
-  To award most helpful answer user can make it "best"
-' do
+feature 'User can vote for others questions' do
   given(:question)   { create :question }
   given(:questioner) { question.user }
-  given(:voter)      { create :voter }
+  given(:voter)      { create :user }
 
   context 'other user', js: true do
-    scenario 'user can vote for answer' do
+    scenario 'user can vote for question' do
       login voter
       visit question_path(question)
 
@@ -23,14 +21,14 @@ feature 'User can choose the best answer', '
         expect(body).to have_link '-1'
       end
 
-      within "#question-#{answer.id}" do
+      within "#question-#{question.id}" do
         click_on '+1'
       end
 
       sleep 0.1
 
       # Rating becomes 1
-      within "#question-#{answer.id} .rating" do
+      within "#question-#{question.id} .rating" do
         expect(body).to have_content '1'
         expect(body).to_not have_link '+1'
         expect(body).to_not have_link '-1'
@@ -40,7 +38,7 @@ feature 'User can choose the best answer', '
       click_on 'unvote'
 
       # Rating becomes 0 again
-      within "#answer-#{answer.id} .rating" do
+      within "#question-#{question.id} .rating" do
         expect(body).to have_content '0'
         expect(body).to have_link '+1'
         expect(body).to have_link '-1'
