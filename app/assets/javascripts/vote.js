@@ -1,27 +1,33 @@
 let hideVoteLinks = function(e){
     e.preventDefault();
 
-    let answerId = $(this).data('answerId');
+    let votableType = $(this).data('votableType').toLowerCase();
+    let votableId = $(this).data('votableId');
 
-    $(`#answer-${answerId} .vote .vote-1-link`).hide();
-    $(`#answer-${answerId} .vote .vote--1-link`).hide();
-    $(`#answer-${answerId} .vote .unvote-link`).show();
+    $(`#${votableType}-${votableId} .vote .vote-1-link`).hide();
+    $(`#${votableType}-${votableId} .vote .vote--1-link`).hide();
+    $(`#${votableType}-${votableId} .vote .unvote-link`).show();
 }
 
 let showVoteLinks = function(e){
     e.preventDefault();
 
-    let answerId = $(this).data('answerId');
+    let votableId   = $(this).data('votableId');
+    let votableType = $(this).data('votableType').toLowerCase();
 
-    $(`#answer-${answerId} .vote .vote-1-link`).show();
-    $(`#answer-${answerId} .vote .vote--1-link`).show();
-    $(`#answer-${answerId} .vote .unvote-link`).hide();
+    $(`#${votableType}-${votableId} .vote .vote-1-link`).show();
+    $(`#${votableType}-${votableId} .vote .vote--1-link`).show();
+    $(`#${votableType}-${votableId} .vote .unvote-link`).hide();
 }
 
 let processResult = function(e) {
     let request_answer = e.detail[0];
-    let answer_id = '#answer-' + request_answer['votable']['id'];
-    let counter   = $(answer_id + ' .vote .rating');
+    let votable_id     = request_answer['votable']['id'];
+    let votable_type   = request_answer['resource'].toLowerCase();
+
+    let votable_css    = `#${votable_type}-${votable_id}`;
+    let counter        = $(votable_css + ' .vote .rating');
+
     counter.text(request_answer['rating']);
 }
 
@@ -32,19 +38,19 @@ let processErrors = function(e) {
 }
 
 function setEventOnPlusOneLink(){
-    $('.answer').on(
+    $('.vote').on(
         'click',
         '.vote-1-link',
         hideVoteLinks
     );
 
-    $('.answer').on(
+    $('.vote').on(
         'click',
         '.vote--1-link',
         hideVoteLinks
     );
 
-    $('.answer').on(
+    $('.vote').on(
         'click',
         '.unvote-link',
         showVoteLinks

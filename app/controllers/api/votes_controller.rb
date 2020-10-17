@@ -16,6 +16,7 @@ module Api
       )
 
       render json: { rating: @votable.rating,
+                     resource: @votable.class.to_s,
                      votable: @votable }
     end
 
@@ -26,6 +27,7 @@ module Api
       ).destroy_all
 
       render json: { rating: @votable.rating,
+                     resource: @votable.class.to_s,
                      votable: @votable }
     end
 

@@ -2,13 +2,7 @@
     .answer id="answer-#{answer.id}"
       .body
         = answer.body
-      - if current_user && !current_user.author_of?(answer)
-        .vote
-          .rating
-            = answer.rating
-          = link_to '+1', api_votes_path(nil, vote: { votable_type: 'Answer', votable_id: answer.id, value: 1 }), data: { answer_id: answer.id }, class: "vote-1-link #{answer.was_voted_by?(current_user) ? 'hidden' : ''}", method: :post, remote: true
-          = link_to '-1', api_votes_path(nil, vote: { votable_type: 'Answer', votable_id: answer.id, value: -1 }), data: { answer_id: answer.id }, class: "vote--1-link #{answer.was_voted_by?(current_user) ? 'hidden' : ''}", method: :post, remote: true
-          = link_to 'unvote', api_votes_path(nil, vote: { votable_type: 'Answer', votable_id: answer.id }), data: { answer_id: answer.id }, class: "unvote-link #{answer.was_voted_by?(current_user) ? '' : 'hidden'}", method: :delete, remote: true
+      = render 'shared/vote', votable: answer
       .links
         =render answer.links
       .attachments
