@@ -2,6 +2,7 @@
     .answer id="answer-#{answer.id}"
       .body
         = answer.body
+      = render 'shared/vote', votable: answer
       .links
         =render answer.links
       .attachments

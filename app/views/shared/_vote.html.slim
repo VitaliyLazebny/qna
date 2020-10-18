@@ -1,0 +1,7 @@
+- if current_user && !current_user.author_of?(votable)
+  .vote
+    .rating
+      = votable.rating
+    = link_to '+1', api_votes_path(nil, vote: { votable_type: votable.class.to_s, votable_id: votable.id, value: 1 }), data: { votable_type: votable.class.to_s, votable_id: votable.id }, class: "vote-1-link #{votable.was_voted_by?(current_user) ? 'hidden' : ''}", method: :post, remote: true
+    = link_to '-1', api_votes_path(nil, vote: { votable_type: votable.class.to_s, votable_id: votable.id, value: -1 }), data: { votable_type: votable.class.to_s, votable_id: votable.id }, class: "vote--1-link #{votable.was_voted_by?(current_user) ? 'hidden' : ''}", method: :post, remote: true
+    = link_to 'unvote', api_votes_path(nil, vote: { votable_type: votable.class.to_s, votable_id: votable.id }), data: { votable_type: votable.class.to_s, votable_id: votable.id }, class: "unvote-link #{votable.was_voted_by?(current_user) ? '' : 'hidden'}", method: :delete, remote: true
