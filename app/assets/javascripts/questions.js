@@ -14,3 +14,13 @@ function setEventOnEditQuestionLink(){
 $(document).on("turbolinks:load",
     setEventOnEditQuestionLink
 );
+
+App.cable.subscriptions.create('QuestionsChannel', {
+    connected() {
+        console.log('Hello, World!');
+        this.perform('do_smth', { text: 'Hello, World!' })
+    },
+    received(data) {
+        console.log(data);
+    }
+});
