@@ -18,9 +18,10 @@ $(document).on("turbolinks:load",
 App.cable.subscriptions.create('QuestionsChannel', {
     connected() {
         console.log('Hello, World!');
-        this.perform('do_smth', { text: 'Hello, World!' })
+        this.perform('follow')
     },
     received(data) {
-        console.log(data);
+        let questions_list = $('#questions-list');
+        questions_list.append(data);
     }
 });

@@ -2,12 +2,8 @@
 
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
-    def connection
+    def connection; end
 
-    end
-
-    def disconnect
-
-    end
+    def disconnect; end
   end
 end

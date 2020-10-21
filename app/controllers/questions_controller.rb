@@ -5,6 +5,8 @@ class QuestionsController < ApplicationController
   before_action :load_question, except: %i[index new create]
   before_action :check_user_permissions, except: %i[index new show create]
 
+  after_action  :publish_question, only: :create
+
   def index
     @questions = Question.all
   end
@@ -64,5 +66,18 @@ class QuestionsController < ApplicationController
                   files: [],
                   links_attributes: %i[id title url _destroy],
                   award_attributes: %i[id title url _destroy])
+  end
+
+  def publish_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast(
+      'questions',
+      ApplicationController.render(
+        'questions/_question_item',
+        layout: false,
+        locals: { question: @question }
+      )
+    )
   end
 end
