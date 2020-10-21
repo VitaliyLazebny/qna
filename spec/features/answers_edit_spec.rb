@@ -24,7 +24,7 @@ feature 'User can edit the answer', '
 
       click_on 'Edit'
 
-      within '.answers' do
+      within '#answers' do
         fill_in 'answer_body', with: edited_answer.body
         click_on 'Save'
 
@@ -41,7 +41,7 @@ feature 'User can edit the answer', '
 
       click_on 'Edit'
 
-      within '.answers' do
+      within '#answers' do
         fill_in 'answer_body', with: ''
         click_on 'Save'
 

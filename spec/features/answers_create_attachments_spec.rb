@@ -20,7 +20,7 @@ feature 'User can answer the question', '
 
     click_on 'answer'
 
-    within '.answers' do
+    within '#answers' do
       expect(page).to have_content 'rails_helper.rb'
       expect(page).to have_content 'spec_helper.rb'
     end

@@ -21,7 +21,7 @@ feature 'User can answer the question', '
     expect(page).to have_content 'Your answer was successfully created.'
     expect(page).to have_content question.title
     expect(page).to have_content question.body
-    within '.answers' do
+    within '#answers' do
       expect(page).to have_content answer.body
     end
   end

@@ -19,13 +19,13 @@ feature 'User can edit the answer', '
 
       click_on 'Edit'
 
-      within '.answers' do
+      within '#answers' do
         fill_in 'answer_body', with: edited_answer.body
         attach_file 'Files', %W[#{Rails.root}/spec/rails_helper.rb #{Rails.root}/spec/spec_helper.rb]
         click_on 'Save'
       end
 
-      within '.answers' do
+      within '#answers' do
         expect(page).to have_content 'rails_helper.rb'
         expect(page).to have_content 'spec_helper.rb'
       end

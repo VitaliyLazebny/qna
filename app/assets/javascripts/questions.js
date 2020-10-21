@@ -14,14 +14,3 @@ function setEventOnEditQuestionLink(){
 $(document).on("turbolinks:load",
     setEventOnEditQuestionLink
 );
-
-App.cable.subscriptions.create('QuestionsChannel', {
-    connected() {
-        console.log('Hello, World!');
-        this.perform('follow')
-    },
-    received(data) {
-        let questions_list = $('#questions-list');
-        questions_list.append(data);
-    }
-});

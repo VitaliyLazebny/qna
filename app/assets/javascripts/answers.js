@@ -1,5 +1,5 @@
 function setEventOnEditAnswerLink(){
-    $('.answers').on(
+    $('#answers').on(
         'click',
         '.edit-answer-link',
         function(e){
