@@ -56,7 +56,7 @@ class AnswersController < ApplicationController
     return if @answer.errors.any?
 
     ActionCable.server.broadcast(
-      'answers',
+      "questions/#{@answer.question_id}/answers",
       ApplicationController.render(json: @answer)
     )
   end
