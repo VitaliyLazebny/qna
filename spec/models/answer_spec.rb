@@ -8,6 +8,7 @@ RSpec.describe Answer, type: :model do
   it { should belong_to(:question) }
   it { should belong_to(:user) }
   it { accept_nested_attributes_for :links }
+  it { should have_many(:votes).dependent(:destroy) }
   it_behaves_like 'Votable'
 
   it 'have many attached files' do
