@@ -1,37 +1,44 @@
 # frozen_string_literal: true
 
 module Api
-  class VotesController < ApplicationController
+  class CommentsController < ApplicationController
     skip_before_action :verify_authenticity_token
     respond_to :json
 
     before_action :authenticate_user!
-    before_action :load_votable
+    before_action :load_commentable
 
     def index
       render json: Comments.all
     end
 
     def create
-      Comment.create(
+      comment = Comment.create(
         user: current_user,
-        votable: @commentable,
+        commentable_id: comment_params[:commentable_id],
+        commentable_type: comment_params[:commentable_type],
         body: comment_params[:body]
       )
 
-      render json: { resource: @commentable.class.to_s,
-                     votable: @commentable }
+      respond_to do |format|
+        format.json { redirect_to question_path(id: comment_params[:commentable_id]) }
+        format.json do
+          render json: { resource: @commentable.class.to_s,
+                         commentable: @commentable,
+                         comment: comment }
+        end
+      end
     end
 
     def destroy
       Vote.where(
         user: current_user,
-        votable: @votable
+        commentable: @commentable
       ).destroy_all
 
-      render json: { rating: @votable.rating,
-                     resource: @votable.class.to_s,
-                     votable: @votable }
+      render json: { rating: @commentable.rating,
+                     resource: @commentable.class.to_s,
+                     commentable: @commentable }
     end
 
     private
@@ -39,7 +46,7 @@ module Api
     def load_commentable
       @commentable = comment_params[:commentable_type]
                    &.constantize
-                   &.find(vote_params[:commentable_id])
+                   &.find(comment_params[:commentable_id])
     end
 
     def comment_params

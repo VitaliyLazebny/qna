@@ -10,7 +10,7 @@
   </head>
 
   <body>
-    <div id="current_user" hidden="hidden"><%= current_user.id %></div>
+    <div id="current_user" hidden="hidden"><%= current_user&.id %></div>
     <% if current_user %>
       <%= link_to :logout, destroy_user_session_path, method: :delete %>
     <% else %>

@@ -1,0 +1,9 @@
+= render 'shared/errors', resource: commentable
+.comments
+  = render commentable.comments
+  = form_with model: Comment.new(user: current_user, commentable: commentable), url: api_comments_path, local: true do |f|
+    = f.hidden_field :commentable_id, value: commentable.id
+    = f.hidden_field :commentable_type, value: commentable.class
+    = f.label :body
+    = f.text_area :body
+    = f.submit :create
