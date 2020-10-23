@@ -32,7 +32,6 @@ let processResult = function(e) {
 }
 
 let processErrors = function(e) {
-    console.log('errors');
     let errors = e.detail[0];
     console.log(errors);
 }

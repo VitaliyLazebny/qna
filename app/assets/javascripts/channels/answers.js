@@ -25,7 +25,6 @@ function fillAnswerHTML(body) {
     answer += answerHTML[0].replaceAll('#{id}',   body['id']);
     answer += answerHTML[1].replaceAll('#{body}', body['body']);
 
-    console.log(userId, body['user_id'], userId === body['user_id'])
     if (userId === body['user_id']){
         answer += answerHTML[3].replaceAll('#{id}',   body['id']);
         answer += answerHTML[4].replaceAll('#{id}',   body['id']);
@@ -43,10 +42,8 @@ const addAnswersSubscription = () => {
             this.perform('follow',  {
                 question_id: questionId
             })
-            console.log('followed', questionId);
         },
         received(data) {
-            console.log('received');
             let answers_list = $('#answers');
             answers_list.append(fillAnswerHTML(JSON.parse(data)));
         }
