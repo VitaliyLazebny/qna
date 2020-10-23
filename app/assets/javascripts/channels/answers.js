@@ -27,7 +27,6 @@ function fillAnswerHTML(body) {
 
     console.log(userId, body['user_id'], userId === body['user_id'])
     if (userId === body['user_id']){
-        // answer += answerHTML[2].replaceAll('#{id}',   body['id']);
         answer += answerHTML[3].replaceAll('#{id}',   body['id']);
         answer += answerHTML[4].replaceAll('#{id}',   body['id']);
     }
@@ -55,4 +54,3 @@ const addAnswersSubscription = () => {
 }
 
 $(document).on('turbolinks:load', addAnswersSubscription );
-// setTimeout(() => { addAnswersSubscription }, 1000);
