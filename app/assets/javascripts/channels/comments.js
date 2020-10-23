@@ -1,0 +1,40 @@
+const commentHTML = '<div class="comment" id="comment-#{id}">#{body}</div>';
+
+function fillCommentHTML(body) {
+    let comment = '';
+    comment = commentHTML;
+    comment = comment.replaceAll('#{id}', body['id']);
+    comment = comment.replaceAll('#{body}', body['body']);
+
+    return comment;
+}
+
+const addCommentsSubscription = () => {
+    let questionId = $('#question_id').text();
+
+    if (!questionId){
+        return;
+    }
+
+    App.cable.subscriptions.create( 'CommentsChannel', {
+        connected() {
+            this.perform('follow',  {
+                question_id: questionId
+            })
+        },
+        received(data) {
+            data = JSON.parse(data);
+
+            let commentsSelector;
+            if (data['commentable_type'] === 'Answer') {
+                commentsSelector = `#answer-${data['commentable_id']} .comments .list`;
+            } else if (data['commentable_type'] === 'Question') {
+                commentsSelector = `.question .comments .list`;
+            }
+
+            $(commentsSelector).append(fillCommentHTML(data));
+        }
+    });
+}
+
+$(document).on('turbolinks:load', addCommentsSubscription );
