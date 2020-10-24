@@ -35,12 +35,10 @@ function fillAnswerHTML(body) {
 }
 
 const addAnswersSubscription = () => {
-    let questionId = $('#question_id').text();
-
     App.cable.subscriptions.create( 'AnswersChannel', {
         connected() {
             this.perform('follow',  {
-                question_id: questionId
+                question_id: gon.question_id
             })
         },
         received(data) {

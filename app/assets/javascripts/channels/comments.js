@@ -10,16 +10,14 @@ function fillCommentHTML(body) {
 }
 
 const addCommentsSubscription = () => {
-    let questionId = $('#question_id').text();
-
-    if (!questionId){
+    if (!gon.question_id){
         return;
     }
 
     App.cable.subscriptions.create( 'CommentsChannel', {
         connected() {
             this.perform('follow',  {
-                question_id: questionId
+                question_id: gon.question_id
             })
         },
         received(data) {

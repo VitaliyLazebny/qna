@@ -36,6 +36,8 @@ gem 'cocoon'
 
 gem 'slim'
 
+gem 'gon'
+
 gem 'devise'
 
 gem 'jquery-rails'
