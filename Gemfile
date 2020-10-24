@@ -38,6 +38,9 @@ gem 'slim'
 
 gem 'gon'
 
+gem 'webpacker'
+gem 'react-rails'
+
 gem 'devise'
 
 gem 'jquery-rails'
