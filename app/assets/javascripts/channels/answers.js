@@ -19,13 +19,12 @@ answerHTML.push(`</div>`);
 // }
 //
 function fillAnswerHTML(body) {
-    let userId = Number($('#current_user').text());
     let answer = '';
 
     answer += answerHTML[0].replaceAll('#{id}',   body['id']);
     answer += answerHTML[1].replaceAll('#{body}', body['body']);
 
-    if (userId === body['user_id']){
+    if (gon.user_id === body['user_id']){
         answer += answerHTML[3].replaceAll('#{id}',   body['id']);
         answer += answerHTML[4].replaceAll('#{id}',   body['id']);
     }
