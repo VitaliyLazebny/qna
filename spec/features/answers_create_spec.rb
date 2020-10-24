@@ -40,4 +40,23 @@ feature 'User can answer the question', '
     visit question_path(question)
     expect(page).to_not have_content 'answer'
   end
+
+  scenario 'answers are displayed with no page reload', js: true do
+    Capybara.using_session('visitor') do
+      visit question_path(question)
+    end
+
+    Capybara.using_session('user') do
+      login answerer
+      visit question_path(question)
+      fill_in :answer_body, with: answer.body
+      click_on 'answer'
+    end
+
+    Capybara.using_session('visitor') do
+      within '#answers' do
+        expect(page).to have_content answer.body
+      end
+    end
+  end
 end
