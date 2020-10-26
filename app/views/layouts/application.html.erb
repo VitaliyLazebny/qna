@@ -8,10 +8,12 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag    'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag    'application' %>
+
   </head>
 
   <body>
-    <div id="current_user" hidden="hidden"><%= current_user&.id %></div>
     <% if current_user %>
       <%= link_to :logout, destroy_user_session_path, method: :delete %>
     <% else %>

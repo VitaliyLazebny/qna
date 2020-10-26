@@ -4,6 +4,7 @@ class HelloWorld extends React.Component {
   render () {
     return (
       <React.Fragment>
+        <div class="barumba">Trinderl</div>
         Greeting: {this.props.greeting}
       </React.Fragment>
     );
@@ -13,4 +14,5 @@ class HelloWorld extends React.Component {
 HelloWorld.propTypes = {
   greeting: PropTypes.string
 };
+
 export default HelloWorld
