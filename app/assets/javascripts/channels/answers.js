@@ -34,6 +34,10 @@ function fillAnswerHTML(body) {
 }
 
 const addAnswersSubscription = () => {
+    if (!gon.question_id) {
+        return;
+    }
+
     App.cable.subscriptions.create( 'AnswersChannel', {
         connected() {
             this.perform('follow',  {
