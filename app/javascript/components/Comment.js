@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
 class Comment extends React.Component {
   render () {
     return (
@@ -9,9 +8,5 @@ class Comment extends React.Component {
     );
   }
 }
-
-Comment.propTypes = {
-  greeting: PropTypes.string
-};
 
 export default Comment

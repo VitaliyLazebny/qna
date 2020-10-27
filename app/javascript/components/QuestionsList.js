@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
 import Question from "./Question";
 
 class QuestionsList extends React.Component {
@@ -44,9 +43,5 @@ class QuestionsList extends React.Component {
         );
     }
 }
-
-QuestionsList.propTypes = {
-    greeting: PropTypes.string
-};
 
 export default QuestionsList

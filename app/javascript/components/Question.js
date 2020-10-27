@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
 class QuestionItem extends React.Component {
   render () {
     return (
@@ -11,9 +10,5 @@ class QuestionItem extends React.Component {
     );
   }
 }
-
-QuestionItem.propTypes = {
-  greeting: PropTypes.string
-};
 
 export default QuestionItem
