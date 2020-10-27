@@ -1,7 +1,8 @@
 = render 'shared/errors', resource: commentable
 .comments
-  .list
-    = render commentable.comments
+  = react_component( "CommentsList",
+          comments: commentable.comments,
+          commentable: {class: commentable.class.name, id: commentable.id} )
   -if current_user
     = form_with model: Comment.new(user: current_user, commentable: commentable), url: api_comments_path, local: true do |f|
       = f.hidden_field :commentable_id, value: commentable.id

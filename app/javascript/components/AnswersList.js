@@ -30,9 +30,6 @@ class AnswersList extends React.Component {
         const answers = bindedThis.state.answers;
         const answersNew = [...answers, JSON.parse(data)];
         bindedThis.setState({answers: answersNew});
-
-        // let answers_list = $('#answers');
-        // answers_list.append(fillAnswerHTML(JSON.parse(data)));
       }
     });
   }
