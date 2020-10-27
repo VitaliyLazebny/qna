@@ -1,17 +1,17 @@
 import React from "react"
 import PropTypes from "prop-types"
-class HelloWorld extends React.Component {
+class Comment extends React.Component {
   render () {
     return (
       <React.Fragment>
-        Greeting: {this.props.greeting}
+        <div class="comment" id="comment-{this.props.id}">{this.props.body}</div>
       </React.Fragment>
     );
   }
 }
 
-HelloWorld.propTypes = {
+Comment.propTypes = {
   greeting: PropTypes.string
 };
 
-export default HelloWorld
+export default Comment
