@@ -5,7 +5,7 @@ class QuestionItem extends React.Component {
     return (
       <React.Fragment>
         <p>
-          <a href={`/questions/${this.props.id}`}>{this.props.body}</a>
+          <a href={`/questions/${this.props.id}`}>{this.props.title}</a>
         </p>
       </React.Fragment>
     );

@@ -11,14 +11,14 @@ feature 'User can see a list of questions', '
   given!(:question_2) { create :question, user: user }
   given(:question)    { build  :question }
 
-  scenario 'user can see question titles at root path' do
+  scenario 'user can see question titles at root path', js: true do
     visit root_path
 
     expect(page).to have_content question_1.title
     expect(page).to have_content question_2.title
   end
 
-  scenario 'user can see question titles at questions list' do
+  scenario 'user can see question titles at questions list', js: true do
     visit questions_path
 
     expect(page).to have_content question_1.title
