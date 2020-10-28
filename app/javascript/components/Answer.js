@@ -23,14 +23,22 @@ class Answer extends React.Component {
            href={ `/answers/${this.state.answer.id}/make_best` }>Make best</a> :
         ''
 
+    const editAnswer = gon.question_creator === gon.user_id ?
+        <a className="edit-answer-link" data-answer-id={ this.state.answer.id } href="#">Edit</a> :
+        ''
+
+    const deleteAnswer = gon.question_creator === gon.user_id ?
+        <a data-remote="true" rel="nofollow" data-method="delete" href={ `/answers/${this.state.id}` }>Delete answer</a> :
+        ''
+
     return (
       <React.Fragment>
         <div className="answer" id={ `answer-${this.state.answer.id}` }>
           <div className="body">{this.state.answer.body}</div>
           { bestAnswer }
           { makeBestAnswer }
-          <a className="edit-answer-link" data-answer-id={ this.state.answer.id } href="#">Edit</a>
-          <a data-remote="true" rel="nofollow" data-method="delete" href={ `/answers/${this.state.id}` }>Delete answer</a>
+          { editAnswer }
+          { deleteAnswer }
         </div>
       </React.Fragment>
     );
