@@ -45,6 +45,9 @@ gem 'devise'
 
 gem 'jquery-rails'
 
+gem 'omniauth'
+gem 'omniauth-github'
+
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara'
