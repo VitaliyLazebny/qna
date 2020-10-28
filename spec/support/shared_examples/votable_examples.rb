@@ -1,4 +1,6 @@
-RSpec.shared_examples 'Votable' do |klass|
+# frozen_string_literal: true
+
+RSpec.shared_examples 'Votable' do |_klass|
   it { should have_many(:votes).dependent(:destroy) }
 
   context 'concern methods' do

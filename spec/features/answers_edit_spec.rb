@@ -24,12 +24,12 @@ feature 'User can edit the answer', '
 
       click_on 'Edit'
 
-      within '.answers' do
+      within '#answers' do
         fill_in 'answer_body', with: edited_answer.body
         click_on 'Save'
 
         expect(page).to_not have_content answer.body
-        expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_selector 'textarea#answer_body'
         expect(page).to have_content edited_answer.body
       end
     end
@@ -41,7 +41,7 @@ feature 'User can edit the answer', '
 
       click_on 'Edit'
 
-      within '.answers' do
+      within '#answers' do
         fill_in 'answer_body', with: ''
         click_on 'Save'
 

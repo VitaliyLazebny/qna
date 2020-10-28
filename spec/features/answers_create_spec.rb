@@ -21,7 +21,7 @@ feature 'User can answer the question', '
     expect(page).to have_content 'Your answer was successfully created.'
     expect(page).to have_content question.title
     expect(page).to have_content question.body
-    within '.answers' do
+    within '#answers' do
       expect(page).to have_content answer.body
     end
   end
@@ -39,5 +39,24 @@ feature 'User can answer the question', '
   scenario 'unauthenticated user creates a question', js: true do
     visit question_path(question)
     expect(page).to_not have_content 'answer'
+  end
+
+  scenario 'answers are displayed with no page reload', js: true do
+    Capybara.using_session('visitor') do
+      visit question_path(question)
+    end
+
+    Capybara.using_session('user') do
+      login answerer
+      visit question_path(question)
+      fill_in :answer_body, with: answer.body
+      click_on 'answer'
+    end
+
+    Capybara.using_session('visitor') do
+      within '#answers' do
+        expect(page).to have_content answer.body
+      end
+    end
   end
 end

@@ -5,6 +5,7 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: %i[update make_best destroy]
   before_action :check_answer_permissions, only: %i[update destroy]
   before_action :check_question_permissions, only: %i[make_best]
+  after_action  :publish_answer, only: :create
 
   def create
     @question = Question.find(params[:question_id])
@@ -49,5 +50,14 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, files: [], links_attributes: %i[id title url _destroy])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast(
+      "questions/#{@answer.question_id}/answers",
+      ApplicationController.render(json: @answer)
+    )
   end
 end

@@ -4,6 +4,8 @@ class Answer < ApplicationRecord
   include Votable
 
   has_many :links, dependent: :destroy, as: :linkable
+  has_many :comments, as: :commentable, dependent: :destroy
+
   has_many_attached :files
 
   belongs_to :question

@@ -2,5 +2,4 @@
 
 = render 'answers/form'
 
-.answers
-  = render @question.answers
+= react_component("AnswersList", answers: @question.answers )

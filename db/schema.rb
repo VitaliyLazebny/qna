@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_201_015_134_826) do
+ActiveRecord::Schema.define(version: 20_201_022_190_047) do
   create_table 'active_storage_attachments', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -54,6 +54,16 @@ ActiveRecord::Schema.define(version: 20_201_015_134_826) do
     t.datetime 'updated_at', null: false
     t.index ['question_id'], name: 'index_awards_on_question_id'
     t.index ['user_id'], name: 'index_awards_on_user_id'
+  end
+
+  create_table 'comments', force: :cascade do |t|
+    t.integer 'user_id', null: false
+    t.text 'commentable_type', null: false
+    t.integer 'commentable_id', null: false
+    t.text 'body', limit: 255
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['user_id'], name: 'index_comments_on_user_id'
   end
 
   create_table 'links', force: :cascade do |t|

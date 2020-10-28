@@ -34,7 +34,7 @@ feature 'User can add links to the answer', '
 
     click_on :answer
 
-    within '.answers .links' do
+    within '#answers .links' do
       expect(page).to have_link link_1.title, href: link_1.url
       expect(page).to have_link link_2.title, href: link_2.url
     end
@@ -68,14 +68,14 @@ feature 'User can add links to the answer', '
       click_on 'add link'
     end
 
-    second_link_fields = find_all('.answers .link_fields .nested-fields').last
+    second_link_fields = find_all('#answers .link_fields .nested-fields').last
     within second_link_fields do
       fill_in 'Link title', with: link_2.title
       fill_in 'Url', with: link_2.url
     end
     click_on 'Save'
 
-    within '.answers .links' do
+    within '#answers .links' do
       expect(page).to have_link link_2.title, href: link_2.url
     end
     expect(page).to_not have_content 'Links url is invalid'

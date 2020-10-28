@@ -1,4 +1,4 @@
-.question id="question-#{question.id}"
+.question id="question-#{@question.id}"
   h1= @question.title
   p= @question.body
 
@@ -27,3 +27,4 @@
     = f.file_field :files, multiple: true
     = render 'links/links_form', resource: f
     = f.submit 'Save'
+  = render 'comments/index', commentable: @question

@@ -21,3 +21,4 @@
         = f.file_field :files, multiple: true
         = render 'links/links_form', resource: f
         = f.submit 'Save'
+      = render 'comments/index', commentable: answer

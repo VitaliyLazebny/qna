@@ -13,8 +13,11 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resources :votes, only: :create
     delete :votes, controller: :votes, action: :destroy
+    resources :comments, only: :create
   end
 
   resources :attachments, only: :destroy
   resources :awards, only: :index
+
+  mount ActionCable.server => '/cable'
 end

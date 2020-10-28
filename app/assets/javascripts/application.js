@@ -15,4 +15,6 @@
 //= require turbolinks
 //= require jquery3
 //= require cocoon
+//= require cable
 //= require_tree .
+

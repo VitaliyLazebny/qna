@@ -6,8 +6,8 @@ feature 'User can create questions', '
   In order to get an answer from community
   User can ask questions
 ' do
-  given(:user)     { create(:user) }
-  given(:question) { build(:question) }
+  given(:user)     { create :user }
+  given(:question) { build  :question }
 
   scenario 'authenticated user creates a question' do
     login user

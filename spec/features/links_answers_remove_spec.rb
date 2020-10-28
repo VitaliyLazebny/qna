@@ -18,7 +18,7 @@ feature 'User can remove links when he edits his answer', '
     visit question_path(question)
     expect(page).to have_link link.title
 
-    within '.answers' do
+    within '#answers' do
       click_on 'Edit'
       click_on 'remove link'
       click_on 'Save'

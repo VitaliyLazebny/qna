@@ -4,6 +4,9 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, except: %i[index new create]
   before_action :check_user_permissions, except: %i[index new show create]
+  before_action :send_question_ids_to_front, only: :show
+
+  after_action  :publish_question, only: :create
 
   def index
     @questions = Question.all
@@ -64,5 +67,19 @@ class QuestionsController < ApplicationController
                   files: [],
                   links_attributes: %i[id title url _destroy],
                   award_attributes: %i[id title url _destroy])
+  end
+
+  def send_question_ids_to_front
+    gon.question_id      = @question.id
+    gon.question_creator = @question.user_id
+  end
+
+  def publish_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast(
+      'questions',
+      ApplicationController.render(json: @question)
+    )
   end
 end
