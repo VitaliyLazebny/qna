@@ -38,8 +38,8 @@ gem 'slim'
 
 gem 'gon'
 
-gem 'webpacker'
 gem 'react-rails'
+gem 'webpacker'
 
 gem 'devise'
 

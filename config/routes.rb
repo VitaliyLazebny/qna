@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users, { omniauth_callbacks: 'oauth_callbacks' }
   root to: 'questions#index'
+
+  # devise_for :users, { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth' }
 
   resources :questions do
     resources :answers, shallow: true do

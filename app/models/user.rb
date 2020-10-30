@@ -15,4 +15,6 @@ class User < ApplicationRecord
   def author_of?(resource)
     id.present? && id == resource.try(:user_id)
   end
+
+  def self.find_by_oauth(oauth); end
 end
