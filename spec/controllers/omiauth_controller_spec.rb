@@ -9,8 +9,12 @@ RSpec.describe OmniauthController, type: :controller do
 
   describe 'Github' do
     context 'does always' do
+      let(:oauth_data) { { provider: 'github', uid: 123 } }
+
       it 'looks for user with oauth data' do
-        expect(User).to receive(:find_by_oauth)
+        allow(request.env).to receive(:[]).and_call_original
+        allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
+        expect(User).to receive(:find_by_oauth).with(oauth_data)
         get :github
       end
 
@@ -21,7 +25,7 @@ RSpec.describe OmniauthController, type: :controller do
         expect(response).to redirect_to root_path
       end
     end
-    
+
     context 'user found' do
       let!(:user) { create :user }
 
