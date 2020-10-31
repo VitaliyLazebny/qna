@@ -8,17 +8,42 @@ RSpec.describe OmniauthController, type: :controller do
   end
 
   describe 'Github' do
-    it 'finds user with oauth data' do
-      expect(User).to receive(:find_by_oauth)
-      get :github
+    context 'does always' do
+      it 'looks for user with oauth data' do
+        expect(User).to receive(:find_by_oauth)
+        get :github
+      end
+
+      it 'redirects to root' do
+        allow(User).to receive(:find_by_oauth)
+        get :github
+
+        expect(response).to redirect_to root_path
+      end
+    end
+    
+    context 'user found' do
+      let!(:user) { create :user }
+
+      before do
+        allow(User).to receive(:find_by_oauth).and_return(user)
+        get :github
+      end
+
+      it 'logins user' do
+        expect(subject.current_user).to eq user
+      end
     end
 
-    it 'logins user if it exists' do
-      allow(User).to receive(:find_by_oauth)
-      get :github
+    context 'user doesnt exist' do
+      before do
+        allow(User).to receive(:find_by_oauth)
+        get :github
+      end
 
-      expect(response).to redirect_to root_path
+      it "doesn't login" do
+        expect(subject.current_user).to_not be
+      end
     end
-    it "doesn't login user which doesn't exist"
   end
 end
