@@ -14,12 +14,12 @@ RSpec.describe OmniauthController, type: :controller do
       it 'looks for user with oauth data' do
         allow(request.env).to receive(:[]).and_call_original
         allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
-        expect(User).to receive(:find_by_oauth).with(oauth_data)
+        expect_any_instance_of(Services::FindByOauth).to receive(:call)
         get :github
       end
 
       it 'redirects to root' do
-        allow(User).to receive(:find_by_oauth)
+        allow_any_instance_of(Services::FindByOauth).to receive(:call)
         get :github
 
         expect(response).to redirect_to root_path
@@ -30,7 +30,9 @@ RSpec.describe OmniauthController, type: :controller do
       let!(:user) { create :user }
 
       before do
-        allow(User).to receive(:find_by_oauth).and_return(user)
+        allow_any_instance_of(Services::FindByOauth)
+          .to receive(:call)
+          .and_return(user)
         get :github
       end
 
@@ -41,7 +43,8 @@ RSpec.describe OmniauthController, type: :controller do
 
     context 'user doesnt exist' do
       before do
-        allow(User).to receive(:find_by_oauth)
+        allow_any_instance_of(Services::FindByOauth)
+          .to receive(:call)
         get :github
       end
 

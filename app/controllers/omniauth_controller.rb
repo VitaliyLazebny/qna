@@ -2,7 +2,9 @@
 
 class OmniauthController < Devise::OmniauthCallbacksController
   def github
-    @user = User.find_by_oauth(request.env['omniauth.auth'])
+    @user = Services::FindByOauth
+            .new(request.env['omniauth.auth'])
+            .call
     if @user&.persisted?
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: 'Github') if is_navigational_format?
