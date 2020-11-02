@@ -31,15 +31,15 @@ module Services
 
     def create_auth
       user.authorizations.create(
-        provider: oauth.provider,
-        uid: oauth.uid
+        provider: oauth['provider'],
+        uid: oauth['uid']
       )
     end
 
     def find_authorization
       @authorization = Authorization.where(
-        provider: oauth.provider,
-        uid: oauth.uid.to_s
+        provider: oauth['provider'],
+        uid: oauth['uid'].to_s
       ).first
     end
 
@@ -48,7 +48,7 @@ module Services
     end
 
     def email
-      oauth.info[:email]
+      oauth.dig('info', 'email')
     end
   end
 end
