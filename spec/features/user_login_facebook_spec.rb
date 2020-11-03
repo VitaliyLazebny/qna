@@ -8,7 +8,7 @@ feature 'User can sign-in', '
 ' do
   describe 'access top page' do
     it 'can sign in user with Facebook account' do
-      mock_auth_hash_github
+      mock_auth_hash_facebook
       visit new_user_session_path
       click_link 'Sign in with Facebook'
       expect(page).to have_content('Successfully authenticated from Facebook account.')
@@ -16,7 +16,7 @@ feature 'User can sign-in', '
     end
 
     it 'can handle authentication error' do
-      mock_invalid_auth_github
+      mock_invalid_auth_facebook
       visit new_user_session_path
       expect(page).to have_content('Sign in with Facebook')
       click_link 'Sign in with Facebook'
