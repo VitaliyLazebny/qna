@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
 module OmniauthMacros
-  def mock_auth_hash_twitter
+  def mock_auth_hash_facebook
     # The mock_auth configuration allows you to set per-provider (or default)
     # authentication hashes to return during integration testing.
-    OmniAuth.config.mock_auth[:twitter] = {
-      'provider' => 'twitter',
+    OmniAuth.config.mock_auth[:facebook] = {
+      'provider' => 'facebook',
       'uid' => '123545',
       'user_info' => {
         'name' => 'mockuser',
         'image' => 'mock_user_thumbnail_url'
+      },
+      'info' => {
+        'email' => 'facebook@facebook.com'
       },
       'credentials' => {
         'token' => 'mock_token',

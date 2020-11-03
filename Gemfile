@@ -47,6 +47,7 @@ gem 'jquery-rails'
 
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'omniauth-facebook'
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
