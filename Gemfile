@@ -52,6 +52,7 @@ gem 'omniauth-github'
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara'
+  gem 'capybara-email'
   gem 'launchy'
   gem 'webdrivers'
 end
@@ -75,8 +76,6 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen'
-
-  gem 'capybara-email'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

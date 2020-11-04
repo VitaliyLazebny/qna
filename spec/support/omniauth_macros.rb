@@ -27,11 +27,15 @@ module OmniauthMacros
     OmniAuth.config.logger = Logger.new('/dev/null')
   end
 
-  def mock_auth_hash_github
+  def mock_auth_hash_github(params = { email: true })
     OmniAuth.config.mock_auth[:github] = {
       'provider' => 'github',
       'uid' => '123545',
-      'info' => { 'email' => 'github@github.com' },
+      'info' => if params[:email]
+                  { 'email' => 'github@github.com' }
+                else
+                  {}
+                end,
       'credentials' => {
         'token' => 'mock_token',
         'secret' => 'mock_secret'
