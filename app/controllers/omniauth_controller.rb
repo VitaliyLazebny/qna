@@ -12,7 +12,7 @@ class OmniauthController < Devise::OmniauthCallbacksController
   private
 
   def oauth_provider
-    request.env['omniauth.auth']['provider'].capitalize
+    request.env.dig('omniauth.auth', 'provider')&.capitalize
   end
 
   def login_user

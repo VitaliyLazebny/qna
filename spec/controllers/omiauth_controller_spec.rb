@@ -8,9 +8,15 @@ RSpec.describe OmniauthController, type: :controller do
   end
 
   describe 'Github' do
-    context 'does always' do
-      let(:oauth_data) { { provider: 'github', uid: 123 } }
+    let(:oauth_data) do
+      {
+        'provider' => 'github',
+        'uid' => '123',
+        'email' => 'some@mail.com'
+      }
+    end
 
+    context 'does always' do
       it 'looks for user with oauth data' do
         allow(request.env).to receive(:[]).and_call_original
         allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
@@ -19,7 +25,7 @@ RSpec.describe OmniauthController, type: :controller do
       end
 
       it 'redirects to root' do
-        allow_any_instance_of(Services::FindByOauth).to receive(:call)
+        allow(Services::FindByOauth).to receive(:new).and_return(double('Services::FindByOauth', call: nil))
         get :github
 
         expect(response).to redirect_to root_path
@@ -29,22 +35,18 @@ RSpec.describe OmniauthController, type: :controller do
     context 'user found' do
       let!(:user) { create :user }
 
-      before do
-        allow_any_instance_of(Services::FindByOauth)
-          .to receive(:call)
-          .and_return(user)
-        get :github
-      end
-
       it 'logins user' do
+        request.env['omniauth.auth'] = oauth_data
+        allow(Services::FindByOauth).to receive(:new).and_return(double('Services::FindByOauth', call: user))
+        get :github
+
         expect(subject.current_user).to eq user
       end
     end
 
     context 'user doesnt exist' do
       before do
-        allow_any_instance_of(Services::FindByOauth)
-          .to receive(:call)
+        allow(Services::FindByOauth).to receive(:new).and_return(double('Services::FindByOauth', call: nil))
         get :github
       end
 
