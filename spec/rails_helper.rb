@@ -46,6 +46,8 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include ControllerHelpers,               type: :controller
   config.include FeatureHelpers,                  type: :feature
+  config.include OmniauthMacros,                  type: :feature
+  OmniAuth.config.test_mode = true
 
   config.after(:all) do
     FileUtils.rm_rf("#{Rails.root}/tmp/storage")

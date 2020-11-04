@@ -38,12 +38,16 @@ gem 'slim'
 
 gem 'gon'
 
-gem 'webpacker'
 gem 'react-rails'
+gem 'webpacker'
 
 gem 'devise'
 
 gem 'jquery-rails'
+
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-facebook'
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
