@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Services
   class FindByOauth
     attr_reader :email, :provider, :uid
