@@ -96,3 +96,9 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+
+# if defined? LetterOpener
+#   class LetterOpener::DeliveryMethod
+#     def deliver!(_mail); true; end
+#   end
+# end
