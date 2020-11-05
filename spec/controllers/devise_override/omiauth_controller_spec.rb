@@ -32,6 +32,22 @@ RSpec.describe DeviseOverride::OmniauthController, type: :controller do
 
         expect(response).to redirect_to root_path
       end
+
+      context 'redirects to signup if no email passed from social network' do
+        let(:oauth_data) do
+          {
+            'provider' => 'github',
+            'uid' => '123',
+          }
+        end
+
+        it 'redirects to signup page if no email' do
+          allow(Services::FindByOauth).to receive(:new).and_return(double('Services::FindByOauth', call: nil))
+          get :github
+
+          expect(response).to redirect_to new_user_registration_path
+        end
+      end
     end
 
     context 'user found' do
