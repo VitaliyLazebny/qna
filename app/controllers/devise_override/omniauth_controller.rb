@@ -12,7 +12,7 @@ module DeviseOverride
     private
 
     def omniauth_data
-      request.env.dig('omniauth.auth')
+      request.env['omniauth.auth']
     end
 
     def email

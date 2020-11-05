@@ -20,10 +20,8 @@ feature 'User can sign-in with oauth ' do
     click_on 'Sign up'
     expect(page).to have_content 'A message with a confirmation link has been sent to your email address.'
 
-    # open_email(user.email)
-    # open_email('no-reply@qna.org')
-    open_email('')
+    open_email(user.email)
     current_email.click_link 'Confirm my account'
-    expect(page).to have_content 'Profile page'
+    expect(page).to have_content 'Your email address has been successfully confirmed.'
   end
 end
