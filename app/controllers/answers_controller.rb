@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_answer, only: %i[update make_best destroy]
   before_action :check_answer_permissions, only: %i[update destroy]
+  load_and_authorize_resource
   before_action :check_question_permissions, only: %i[make_best]
   after_action  :publish_answer, only: :create
 

@@ -4,6 +4,7 @@ class AttachmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_attachment
   before_action :load_model
+  load_and_authorize_resource
   before_action :check_permissions
 
   def destroy

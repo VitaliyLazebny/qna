@@ -3,9 +3,10 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, except: %i[index new create]
+  load_and_authorize_resource
+
   before_action :check_user_permissions, except: %i[index new show create]
   before_action :send_question_ids_to_front, only: :show
-
   after_action  :publish_question, only: :create
 
   def index

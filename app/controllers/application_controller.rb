@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   before_action :send_user_id_to_front, only: :show
   before_action :make_action_mailer_use_request_host_and_protocol
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, alert: exception.message
+  end
+
   private
 
   def make_action_mailer_use_request_host_and_protocol
