@@ -3,8 +3,12 @@
 Rails.application.routes.draw do
   root to: 'questions#index'
 
-  # devise_for :users, { omniauth_callbacks: 'omniauth_callbacks' }
-  devise_for :users, controllers: { omniauth_callbacks: 'omniauth' }
+  devise_for :users,
+             controllers: {
+               omniauth_callbacks: 'devise_override/omniauth',
+               confirmations: 'devise_override/confirmations',
+               registrations: 'devise_override/registrations'
+             }
 
   resources :questions do
     resources :answers, shallow: true do

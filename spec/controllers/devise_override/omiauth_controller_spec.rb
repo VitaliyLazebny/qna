@@ -2,24 +2,26 @@
 
 require 'rails_helper'
 
-RSpec.describe OmniauthController, type: :controller do
+RSpec.describe DeviseOverride::OmniauthController, type: :controller do
   before do
     @request.env['devise.mapping'] = Devise.mappings[:user]
   end
 
-  describe 'Github' do
-    let(:oauth_data) do
-      {
-        'provider' => 'github',
-        'uid' => '123',
-        'email' => 'some@mail.com'
-      }
-    end
+  let(:oauth_data) do
+    {
+      'provider' => 'github',
+      'uid' => '123',
+      'info' => { 'email' => 'some@mail.com' }
+    }
+  end
+
+  before(:each) do
+    allow(request.env).to receive(:[]).and_call_original
+    allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
+  end
 
     context 'does always' do
       it 'looks for user with oauth data' do
-        allow(request.env).to receive(:[]).and_call_original
-        allow(request.env).to receive(:[]).with('omniauth.auth').and_return(oauth_data)
         expect_any_instance_of(Services::FindByOauth).to receive(:call)
         get :github
       end
@@ -29,6 +31,22 @@ RSpec.describe OmniauthController, type: :controller do
         get :github
 
         expect(response).to redirect_to root_path
+      end
+
+      context 'redirects to signup if no email passed from social network' do
+        let(:oauth_data) do
+          {
+            'provider' => 'github',
+            'uid' => '123',
+          }
+        end
+
+        it 'redirects to signup page if no email' do
+          allow(Services::FindByOauth).to receive(:new).and_return(double('Services::FindByOauth', call: nil))
+          get :github
+
+          expect(response).to redirect_to new_user_registration_path
+        end
       end
     end
 
@@ -54,5 +72,4 @@ RSpec.describe OmniauthController, type: :controller do
         expect(subject.current_user).to_not be
       end
     end
-  end
 end

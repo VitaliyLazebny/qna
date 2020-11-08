@@ -7,12 +7,12 @@ RSpec.describe Services::FindByOauth do
 
   context 'user has authorization' do
     let(:user) { create :user }
-    let(:auth) {
+    let(:auth) do
       OmniAuth::AuthHash.new(
         provider: 'facebook',
         uid: 123_456
       )
-    }
+    end
 
     it 'returns user' do
       user.authorizations.create(provider: 'facebook', uid: 123_456)
