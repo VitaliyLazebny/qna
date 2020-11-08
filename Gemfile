@@ -41,8 +41,8 @@ gem 'gon'
 gem 'react-rails'
 gem 'webpacker'
 
-gem 'devise'
 gem 'cancancan'
+gem 'devise'
 
 gem 'jquery-rails'
 

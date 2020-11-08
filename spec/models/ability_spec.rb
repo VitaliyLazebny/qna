@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Ability do
@@ -13,10 +15,8 @@ describe Ability do
   end
 
   describe 'user' do
-
   end
 
   describe 'author' do
-
   end
 end
