@@ -2,7 +2,7 @@
 
 class AwardsController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
+  skip_authorization_check only: :index
 
   def index
     @questions = current_user.awards

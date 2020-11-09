@@ -28,7 +28,7 @@ class Answer extends React.Component {
         ''
 
     const deleteAnswer = gon.question_creator === gon.user_id ?
-        <a data-remote="true" rel="nofollow" data-method="delete" href={ `/answers/${this.state.id}` }>Delete answer</a> :
+        <a data-remote="true" rel="nofollow" data-method="delete" href={ `/answers/${this.state.answer.id}` }>Delete answer</a> :
         ''
 
     return (
