@@ -2,10 +2,11 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_answer, only: %i[update make_best destroy]
-  before_action :check_answer_permissions, only: %i[update destroy]
+  # before_action :load_answer, only: %i[update make_best destroy]
+  # before_action :check_answer_permissions, only: %i[update destroy]
   load_and_authorize_resource
-  before_action :check_question_permissions, only: %i[make_best]
+  # before_action :load_question, only: :make_best
+  # before_action :check_question_permissions, only: %i[make_best]
   after_action  :publish_answer, only: :create
 
   def create
@@ -19,6 +20,8 @@ class AnswersController < ApplicationController
 
   def make_best
     @answer.make_best!
+    flash[:notice] = "The answer was marked as best."
+    redirect_to @answer.question
   end
 
   def destroy
@@ -31,23 +34,23 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
   end
 
-  def check_answer_permissions
-    render_403 unless current_user.author_of?(@answer)
-  end
+  # def check_answer_permissions
+  #   render_403 unless current_user.author_of?(@answer)
+  # end
 
-  def check_question_permissions
-    render_403 unless current_user.author_of?(parent_question)
-  end
+  # def check_question_permissions
+  #   render_403 unless current_user.author_of?(parent_question)
+  # end
 
-  def parent_question
-    @parent_question ||= @answer.question
-  end
+  # def load_question
+  #   @parent_question ||= @answer.question
+  # end
 
-  def render_403
-    send_file File.join(Rails.root, 'public/403.html'),
-              type: 'text/html; charset=utf-8',
-              status: :forbidden
-  end
+  # def render_403
+  #   send_file File.join(Rails.root, 'public/403.html'),
+  #             type: 'text/html; charset=utf-8',
+  #             status: :forbidden
+  # end
 
   def answer_params
     params.require(:answer).permit(:body, files: [], links_attributes: %i[id title url _destroy])

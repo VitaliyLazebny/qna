@@ -14,7 +14,7 @@
   .links
     = render question.links
 
-  - if current_user&.author_of?(@question)
+  - if can? :manage, @question
     = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
     = link_to 'Delete question', question_path(@question), method: :delete
 

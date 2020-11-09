@@ -2,10 +2,8 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, except: %i[index new create]
   load_and_authorize_resource
 
-  before_action :check_user_permissions, except: %i[index new show create]
   before_action :send_question_ids_to_front, only: :show
   after_action  :publish_question, only: :create
 
@@ -49,18 +47,6 @@ class QuestionsController < ApplicationController
   end
 
   private
-
-  def check_user_permissions
-    return if current_user.author_of?(@question)
-
-    send_file File.join(Rails.root, 'public/403.html'),
-              type: 'text/html; charset=utf-8',
-              status: :forbidden
-  end
-
-  def load_question
-    @question = Question.with_attached_files.find(params[:id])
-  end
 
   def question_params
     params.require(:question)
