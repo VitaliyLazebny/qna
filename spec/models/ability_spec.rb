@@ -15,10 +15,17 @@ describe Ability do
   describe 'user' do
     let(:user) { create :user }
 
-    it { should be_able_to :manage, Question }
-    it { should be_able_to :manage, Comment }
-    it { should be_able_to :manage, Vote }
-    it { should be_able_to :manage, ActiveStorage::Attachment }
-    it { should be_able_to [:create, :update, :destroy, :make_best], Answer }
+    it { should_not be_able_to :manage, create(:question) }
+    it { should_not be_able_to :manage, create(:comment) }
+    it { should_not be_able_to [:create, :update, :destroy, :make_best], create(:answer) }
+  end
+
+  describe 'author' do
+    let(:user) { create :user }
+
+    it { should be_able_to :manage, create(:question, user: user) }
+    it { should be_able_to :manage, create(:comment, user: user) }
+    it { should be_able_to [:create, :update, :destroy], create(:answer, user: user) }
+    it { should be_able_to :make_best, create(:answer, question: create(:question, { user: user } )) }
   end
 end
