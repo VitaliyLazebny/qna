@@ -16,7 +16,7 @@ class AnswersController < ApplicationController
 
   def make_best
     @answer.make_best!
-    flash[:notice] = "The answer was marked as best."
+    flash[:notice] = 'The answer was marked as best.'
     redirect_to @answer.question
   end
 

@@ -15,7 +15,7 @@ class Ability
       can :manage, ActiveStorage::Attachment, record: { user_id: user.id }
 
       can :create, Answer
-      can [:update, :destroy], Answer, user_id: user.id
+      can %i[update destroy], Answer, user_id: user.id
       can :make_best, Answer, question: { user_id: user.id }
     end
 
