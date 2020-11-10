@@ -2,6 +2,7 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_answer, only: %i[update make_best destroy]
   after_action  :publish_answer, only: :create
 
   def create
@@ -24,6 +25,10 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def load_answer
+    @answer = Answer.find(params[:id])
+  end
 
   def answer_params
     params.require(:answer).permit(:body, files: [], links_attributes: %i[id title url _destroy])

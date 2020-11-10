@@ -2,6 +2,7 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
+  before_action :load_question, except: %i[index new create]
   before_action :send_question_ids_to_front, only: :show
   after_action  :publish_question, only: :create
 
@@ -45,6 +46,10 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def load_question
+    @question = Question.with_attached_files.find(params[:id])
+  end
 
   def question_params
     params.require(:question)

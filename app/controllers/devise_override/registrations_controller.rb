@@ -2,6 +2,7 @@
 
 module DeviseOverride
   class RegistrationsController < Devise::RegistrationsController
+    skip_authorization_check
     after_action :add_authorization, only: :create
 
     private

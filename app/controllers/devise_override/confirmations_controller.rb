@@ -2,6 +2,8 @@
 
 module DeviseOverride
   class ConfirmationsController < Devise::ConfirmationsController
+    skip_authorization_check
+
     private
 
     def after_confirmation_path_for(_resource_name, resource)

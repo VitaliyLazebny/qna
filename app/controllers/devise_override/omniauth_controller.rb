@@ -2,6 +2,7 @@
 
 module DeviseOverride
   class OmniauthController < Devise::OmniauthCallbacksController
+    skip_authorization_check
     before_action :redirect_to_enter_email_page
     before_action :login_user
 
