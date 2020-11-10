@@ -6,7 +6,6 @@ module Api
     respond_to :json
 
     before_action :authenticate_user!
-    authorize_resource
     after_action :publish_question
 
     def create

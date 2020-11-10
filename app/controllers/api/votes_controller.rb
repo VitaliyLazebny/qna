@@ -6,7 +6,6 @@ module Api
     respond_to :json
 
     before_action :authenticate_user!
-    authorize_resource
     before_action :load_votable
 
     def create

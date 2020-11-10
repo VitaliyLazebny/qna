@@ -2,7 +2,6 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
   after_action  :publish_answer, only: :create
 
   def create

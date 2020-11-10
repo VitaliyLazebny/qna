@@ -2,8 +2,6 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  load_and_authorize_resource
-
   before_action :send_question_ids_to_front, only: :show
   after_action  :publish_question, only: :create
 
