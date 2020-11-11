@@ -11,7 +11,10 @@ class Ability
     if user
       can :manage, Question, user_id: user.id
       can :manage, Comment, user_id: user.id
-      can :manage, Vote, user_id: user.id
+
+      can :create, Vote, votable: { user_id: user.id }
+      can :destroy, Vote, user_id: user.id
+
       can :manage, ActiveStorage::Attachment, record: { user_id: user.id }
 
       can :create, Answer
