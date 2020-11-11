@@ -27,12 +27,12 @@ module DeviseOverride
       @user = Services::FindByOauth
               .new(omniauth_data)
               .call
-      if @user&.persisted?
-        set_flash_message(:notice, :success, kind: oauth_provider) if is_navigational_format?
-        sign_in_and_redirect @user, event: :authentication
-      else
-        redirect_to root_path, alert: 'something went wrong'
-      end
+
+      redirect_to root_path,
+                  alert: 'something went wrong' unless @user&.persisted?
+
+      set_flash_message(:notice, :success, kind: oauth_provider) if is_navigational_format?
+      sign_in_and_redirect @user, event: :authentication
     end
 
     def redirect_to_enter_email_page
