@@ -47,6 +47,7 @@ gem 'devise'
 gem 'jquery-rails'
 
 gem 'omniauth'
+gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 
