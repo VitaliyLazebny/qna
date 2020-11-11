@@ -20,7 +20,7 @@ module DeviseOverride
     end
 
     def oauth_provider
-      omniauth_data.dig('provider')&.capitalize
+      omniauth_data['provider']&.capitalize
     end
 
     def login_user

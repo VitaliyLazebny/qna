@@ -7,13 +7,14 @@
         =render answer.links
       .attachments
         = render partial: "attachments/attachment", collection: answer.files
-      - if current_user&.author_of?(answer.question)
+      - if can? :make_best, answer
         - if answer.best?
           .best_answer_mark The best answer!
         - else
           = link_to 'Make best', make_best_answer_path(answer), class: 'make-best-answer-link', method: :patch, remote: true
-      - if current_user&.author_of?(answer)
+      - if can? :update, answer
         = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+      - if can? :delete, answer
         = link_to 'Delete answer', answer, remote: true, method: :delete
       = form_with model: answer, remote: true, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }  do |f|
         = f.text_area :body, rows: 3
